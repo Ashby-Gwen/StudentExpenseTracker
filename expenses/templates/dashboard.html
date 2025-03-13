@@ -1,0 +1,68 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="welcome-message">
+            <h1>Welcome, {{ user.first_name }}!</h1>
+        </div>
+
+        <!-- Navigation -->
+        <nav>
+            <ul class="navbar">
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'add_expense' %}">Add Expense</a></li>
+                <li><a href="{% url 'set_budget' %}">Set Budget</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <section class="financial-summary">
+            <div class="total-expenses">
+                <h2>Total Expenses</h2>
+                <p>${{ total_expenses }}</p>
+            </div>
+
+            <div class="remaining-budget">
+                <h2>Remaining Budget</h2>
+                <div class="progress-bar">
+                    <div class="progress" style="width: {{ (total_expenses / budget) * 100 }}%;"></div>
+                </div>
+                <p>You have spent {{ (total_expenses / budget) * 100 }}% of your budget</p>
+            </div>
+        </section>
+
+        <!-- Recent Activity Feed -->
+        <section class="recent-activity">
+            <h2>Recent Activity</h2>
+            <ul>
+                {% for expense in recent_expenses %}
+                    <li>
+                        <strong>{{ expense.date }}</strong>: ${{ expense.amount }} - {{ expense.category }} 
+                        <br>
+                        <em>{{ expense.description }}</em>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Your Finance App. All Rights Reserved.</p>
+        <p><a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+</body>
+</html>

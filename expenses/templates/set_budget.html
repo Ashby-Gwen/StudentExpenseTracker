@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Your Budget - Personal Finance</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Set Your Monthly Budget</h1>
+        <nav>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/add-expense">Add Expense</a></li>
+                <li><a href="/profile">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form action="/set-budget" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="budget">Monthly Budget</label>
+                <input type="number" id="budget" name="budget" placeholder="Enter your monthly budget" required>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" style="width: {{ budget_percentage }}%"></div>
+            </div>
+            <p>You have set {{ budget_percentage }}% of your budget.</p>
+
+            <button type="submit" class="submit-btn">Set Budget</button>
+        </form>
+
+        {% if success_message %}
+            <p class="success">{{ success_message }}</p>
+        {% endif %}
+        {% if error_message %}
+            <p class="error">{{ error_message }}</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <a href="/dashboard">Back to Dashboard</a>
+    </footer>
+
+</body>
+</html>
